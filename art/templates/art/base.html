@@ -1,0 +1,217 @@
+{% load static %}
+{% load compress %}
+{% load inline_static_tags %}
+{#{% load pwa %}#}
+<html ⚡ lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    {#    ===================== SEO  ================================================================#}
+
+    <meta name="description" content="This is the AMP Boilerplate.">
+    {#  ===================== PWA  ========================================== #}
+    {#    {% progressive_web_app_meta %}#}
+    {#    ============================= AMP ==========================================#}
+    <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
+    <link rel="preconnect dns-prefetch" href="https://fonts.gstatic.com/" crossorigin>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <!--  =================== Import other AMP Extensions here ==========================------------------>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    <script
+            async
+            custom-element="amp-sidebar"
+            src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"
+    ></script>
+    <script
+            async
+            custom-element="amp-form"
+            src="https://cdn.ampproject.org/v0/amp-form-0.1.js"
+    ></script>
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    {#    {% compress css %}#}
+    <style amp-custom>
+        {% inline_style 'art/styles/main.css' %}
+        {% inline_style 'art/styles/header.css' %}
+        {% inline_style 'art/styles/nav-bar.css' %}
+         {% inline_style 'art/styles/home.css' %}
+    </style>
+    {#    {% endcompress %}#}
+    <style amp-boilerplate>body {
+        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        animation: -amp-start 8s steps(1, end) 0s 1 normal both
+    }
+
+    @-webkit-keyframes -amp-start {
+        from {
+            visibility: hidden
+        }
+        to {
+            visibility: visible
+        }
+    }
+
+    @-moz-keyframes -amp-start {
+        from {
+            visibility: hidden
+        }
+        to {
+            visibility: visible
+        }
+    }
+
+    @-ms-keyframes -amp-start {
+        from {
+            visibility: hidden
+        }
+        to {
+            visibility: visible
+        }
+    }
+
+    @-o-keyframes -amp-start {
+        from {
+            visibility: hidden
+        }
+        to {
+            visibility: visible
+        }
+    }
+
+    @keyframes -amp-start {
+        from {
+            visibility: hidden
+        }
+        to {
+            visibility: visible
+        }
+    }</style>
+    <noscript>
+        <style amp-boilerplate>body {
+            -webkit-animation: none;
+            -moz-animation: none;
+            -ms-animation: none;
+            animation: none
+        }</style>
+    </noscript>
+
+    <link rel="canonical" href=".">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{#    ======================  NAVIGATION BAR ===========================#}
+<amp-sidebar id="sidebar" layout="nodisplay" side="left">
+    <nav class="navigation">
+        <div class="navigation-header">
+            <h3 class="navigation-title">Навигация </h3>
+            <span role="span" tabIndex="0" on="tap:sidebar.toggle">
+          <amp-img
+                  alt="menu"
+                  src={% static 'art/menu.svg' %}
+                          width="20"
+                  height="20"></amp-img>
+        </span>
+        </div>
+
+        <ul class="navbar">
+            <li class="navbar-items">
+                <a href="/" class="navbar-link">
+                    <amp-img
+                            class="logo-link"
+                            alt="logo cinema"
+                            src={% static 'art/movie-player.svg' %}
+                                    width="30"
+                            height="30"></amp-img>
+                    <span>На главную</span>
+                </a>
+            </li>
+            <li class="navbar-items">2</li>
+            <li class="navbar-items">3</li>
+            <li class="navbar-items">4</li>
+            <li class="navbar-items">5</li>
+        </ul>
+
+    </nav>
+</amp-sidebar>
+{#    ======================  NAVIGATION BAR END ===========================#}
+{#    ======================= HEADR  ===================================#}
+<header class="header">
+    <div class="menu">
+        <div
+                class="menu-content"
+                role="div"
+                tabIndex="1"
+                on="tap:sidebar.toggle">
+            <amp-img
+                    alt="menu"
+                    src={% static 'art/menu.svg' %}
+                            width="20"
+                    height="20"></amp-img>
+            <span class="menu-text">меню</span>
+        </div>
+        <div class="logo" tabIndex="2">
+            <a href="/">
+                <amp-img
+                        alt="logo cinema"
+                        src={% static 'art/logo_cinema.png' %}
+                                width="400"
+                        height="352"
+                        layout="responsive"></amp-img>
+            </a>
+        </div>
+    </div>
+
+    <div class="search">
+        <div class="search-conten">
+            <form method="get" action="/search" target="_top">
+                <input
+                        tabIndex="3"
+                        id="search"
+                        name="q"
+                        type="text"
+                        placeholder="поиск"
+                        class="searchform"
+                />
+
+                <div class="btn-search">
+                    <label>
+                        <input type="submit" class="input-q"/>
+                        <amp-img
+                                alt="logo cinema"
+                                src={% static 'art/loupe.svg' %}
+                                        width="20"
+                                height="20"></amp-img>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+{#    ======================= HEADR  END ===================================#}
+
+{# =========================== MAIN CONTENT =================================#}
+<main class="main">
+    {% block main_section %}
+    {% endblock main_section %}
+</main>
+{# ========================== MAIN CONTENT END ===============================#}
+
+{# =================   SCRIPTS      ======================================#}
+
+<script type="application/json">
+    {
+      "vars" : {
+        "gtag_id": "",
+        "config" : {
+          "": {
+            "groups": "default"
+          }
+        }
+      }
+    }
+    </script>
+</amp-analytics>
+</body>
+</html>

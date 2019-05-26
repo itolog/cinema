@@ -1,0 +1,78 @@
+html {
+    user-select: none;
+    font-size: 18px;
+    word-spacing: 1px;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+
+scrollbar-color:  #3366FF black;
+  scrollbar-width: thin;
+}
+
+
+/*
+ *  STYLE 11
+ */
+
+html::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #131217;
+	border-radius: 10px;
+}
+
+html::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #131217;
+}
+
+html::-webkit-scrollbar-thumb
+{
+	background-color: #3366FF;
+	border-radius: 10px;
+	background-image: -webkit-linear-gradient(0deg,
+	                                          rgba(255, 255, 255, 0.5) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, 0.5) 50%,
+											  rgba(255, 255, 255, 0.5) 75%,
+											  transparent 75%,
+											  transparent)
+}
+h1 {
+    margin: 0;
+}
+
+.centred {
+    position: relative;
+    max-width: 1600px;
+    margin: auto;
+}
+
+.video-page {
+    display: flex;
+    justify-content: center;
+
+}
+
+.video-player {
+    width: 600px;
+    height: 400px;
+}
+
+.main {
+    background: #0F0F0F;
+    min-height: 100%;
+}
+
+.err {
+    justify-content: center;
+    align-content: center;
+    border: 3px outset blue;
+    color: white;
+    padding: 30px;
+}

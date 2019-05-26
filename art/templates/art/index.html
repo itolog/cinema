@@ -1,0 +1,95 @@
+{% extends 'art/base.html' %}
+{% load static %}
+
+{% block title %}
+    HOME
+{% endblock %}
+
+{% block main_section %}
+    <section class="home">
+        <a href={% url 'page' id=2 %}>2</a><a href={% url 'page' id=3 %}>3</a>
+        {#     empty or error       #}
+        {% if not data %}
+            <div class="err">
+                <h1>что-то пошло не так :(</h1>
+                <h2>приходите позже</h2>
+            </div>
+        {% endif %}
+        {#     empty or error       #}
+        {% for item in data %}
+
+            <div class="movie-card">
+                {# ==========  INFO BLOCK   ===============================   #}
+                <div class="info">
+                    {% if item.material_data.imdb_rating != 0 and item.material_data.imdb_rating != None %}
+                        <h5 class="rating">
+                            IMDb :
+                            <span class="rating--imdb">  {{ item.material_data.imdb_rating }}</span>
+                        </h5>
+                    {% endif %}
+                    {% if item.material_data.kinopoisk_rating != 0 and item.material_data.kinopoisk_rating != None %}
+                        <h5 class="rating">
+                            КиноПоиск :
+                            <span class="rating--kinopoisk">{{ item.material_data.kinopoisk_rating }}</span>
+                        </h5>
+                    {% endif %}
+                    {#  ===== IS CAMRIP OR NOT ==============              #}
+                    {% if item.camrip %}
+                        <h5 class="rating">
+                            CAMRip
+                        </h5>
+                    {% endif %}
+                    {#  ===== IS CAMRIP OR NOT   END==============              #}
+                    {#  ===== PLAY BUTTON ===========              #}
+                    <a
+                            href="{% url 'video' %}?title={{ item.kinopoisk_id }}"
+                            class="play-link"
+                            rel="noopener">
+                        <amp-img
+                                class="movie-poster"
+                                alt="play button"
+                                fallback
+                                width="60"
+                                height="60"
+                                src={% static 'art/img/play-button.svg' %}></amp-img>
+                    </a>
+
+
+                    {% if item.material_data.year != 0 and  item.material_data.year != 'None' %}
+                        <div class="ratelabel">
+                            {{ item.material_data.year }}
+                        </div>
+                    {% endif %}
+                </div>
+                {# ==========  INFO BLOCK   END ===============================   #}
+                {# ==========  POSER  ====================================#}
+                {% if item.material_data.poster %}
+                    <amp-img
+                            class="movie-poster"
+                            alt={{ item.title_ru }}
+
+                                    width="200"
+                            height="300"
+                            src={{ item.material_data.poster }}></amp-img>
+                {% else %}
+                    <amp-img
+                            class="movie-poster"
+                            alt={{ item.title_ru }}
+
+                                    width="200"
+                            height="300"
+                            src={% static 'art/img/Poster_Not_Available2.jpg' %}></amp-img>
+                {% endif %}
+                <h4 class="card-title">{{ item.title_ru }}</h4>
+                {# ==========  POSER   END ====================================#}
+            </div>
+            <br><br>
+            {#    <iframe#}
+            {#            src={{ item.iframe_url }}#}
+            {#                    width="100%"#}
+            {#            height="280"#}
+            {#            frameBorder="0"#}
+            {#            allowFullScreen=""></iframe>#}
+        {% endfor %}
+    </section>
+{% endblock %}

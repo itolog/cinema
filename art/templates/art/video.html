@@ -1,0 +1,20 @@
+{% extends 'art/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}v
+
+{% block main_section %}
+    <h1>{{ title }}</h1>
+   <section class="video-page">
+    <div
+          id="yohoho"
+          class="video-player"
+          data-kinopoisk={{ title }}
+          >
+    </div>
+   </section>
+
+    <script src="//yohoho.cc/yo.js"></script>
+{% endblock %}
