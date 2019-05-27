@@ -1,20 +1,71 @@
 {% extends 'art/base.html' %}
 {% load static %}
+{% load inline_static_tags %}
 
 {% block title %}
     {{ title }}
-{% endblock %}v
+{% endblock %}
+{% block styles %}
+    {% inline_style 'art/styles/video-page.css' %}
+{% endblock %}
+{% block description %}
+    {% if description %}
+        <meta name="description" content={{ description }}>
+    {% else %}
+        <meta name="description" content="Онлайн кинотеатр.Cinema online">
+    {% endif %}
+{% endblock %}
 
+{#====================     MAIN CONTENT ========================================     #}
 {% block main_section %}
-    <h1>{{ title }}</h1>
-   <section class="video-page">
-    <div
-          id="yohoho"
-          class="video-player"
-          data-kinopoisk={{ title }}
-          >
-    </div>
-   </section>
+
+    <section class="video-page">
+        {# ===========   INFO ============================   #}
+        <div class="video-info">
+            <div class="content-poster">
+                <amp-img
+                        class="video-poster"
+                        alt={{ item.title_ru }}
+
+                                width="200"
+                        height="300"
+                        src={{ poster }}></amp-img>
+            </div>
+            <div class="content-text">
+                <div class="video-page-title">
+                    <div>
+                        <h1 class="video-title">{{ title }}</h1>
+                        <h3>{{ title_en }}</h3>
+                    </div>
+                    <div class="video-page-raite">
+                         <amp-img
+                                class="video-poster"
+                                alt={{ raite }}
+
+                                        width="20"
+                                height="20"
+                                src={% static 'art/img/star.svg' %}></amp-img>
+                        {{ raite }}
+                    </div>
+                </div>
+                {% if material_data %}
+                    {% for mat_item in material_data %}
+
+                    {% endfor %}
+
+                {% endif %}
+            </div>
+        </div>
+        <div class="media-content">
+            <div
+                    id="yohoho"
+                    class="video-player"
+                    data-kinopoisk={{ query }}
+            >
+            </div>
+        </div>
+
+    </section>
 
     <script src="//yohoho.cc/yo.js"></script>
 {% endblock %}
