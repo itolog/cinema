@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     {#    ===================== SEO  ================================================================#}
+    {% block description %}{% endblock %}
 
-    <meta name="description" content="This is the AMP Boilerplate.">
     {#  ===================== PWA  ========================================== #}
     {#    {% progressive_web_app_meta %}#}
     {#    ============================= AMP ==========================================#}
@@ -34,7 +34,10 @@
         {% inline_style 'art/styles/main.css' %}
         {% inline_style 'art/styles/header.css' %}
         {% inline_style 'art/styles/nav-bar.css' %}
-         {% inline_style 'art/styles/home.css' %}
+        {% inline_style 'art/styles/home.css' %}
+        {% block styles %}
+
+        {% endblock %}
     </style>
     {#    {% endcompress %}#}
     <style amp-boilerplate>body {

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import json
 import os
+from django.core.paginator import Paginator
 
 import requests
 import pprint
@@ -15,29 +16,35 @@ with open(file) as conf:
     token_imdb = secrets["TOKEN_IMDB"]
 
 
-def index(request):
-    url = f"http://moonwalk.cc/api/movies_updates.json?api_token={token}"
+def data_context(url):
     res = requests.get(url)
     res_json = res.json()
-    # pprint.pprint(res_json)
-    print(len(res_json))
-    # print("res", res_json)
-    # print(res_json['updates'])
+    current_page = res_json['current_page']
+    start_loop = current_page
+    stop_loop = current_page + 3
+    revers_step = current_page - 2
+    # pprint.pprint(res_json['updates'])
     context = {
         "data": res_json['updates'],
+        "current_page": current_page,
+        "loop_pagination": range(start_loop, stop_loop),
+        "reverse_loop": reversed(range(start_loop)),
+        "revers_step": revers_step,
         "title": "Sinema"
     }
+    return context
+
+
+def index(request):
+    url = f"http://moonwalk.cc/api/movies_updates.json?api_token={token}"
+
+    context = data_context(url)
     return render(request, "art/index.html", context)
 
 
 def page(request, id):
     url = f"http://moonwalk.cc/api/movies_updates.json?api_token={token}&page={id}"
-    res = requests.get(url)
-    res_json = res.json()
-    context = {
-        "data": res_json['updates'],
-        "title": "Sinema"
-    }
+    context = data_context(url)
     return render(request, "art/index.html", context)
 
 
@@ -56,8 +63,25 @@ def search(request):
 
 def video(request):
     if request.method == "GET":
+        id = request.GET['title']
+        url = f"http://moonwalk.cc/api/videos.json?kinopoisk_id={id}&api_token={token}"
+        res = requests.get(url)
+        res_json = res.json()
+        title = res_json[0].get('title_ru')
+        title_en = res_json[0].get('title_en')
+        material_data = res_json[0].get('material_data')
+        description = material_data['description']
+        poster = material_data['poster']
+        raite = material_data['imdb_rating']
+        pprint.pprint(material_data)
+
         context = {
-            "title": request.GET['title'],
+            "title": title,
+            "description": description,
+            "material_data": material_data,
+            "title_en": title_en,
+            "poster": poster,
+            "raite": raite,
             "query": request.GET['title']
         }
     return render(request, "art/video.html", context)

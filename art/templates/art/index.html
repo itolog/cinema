@@ -2,17 +2,17 @@
 {% load static %}
 
 {% block title %}
-    HOME
+    Cinema
 {% endblock %}
-
+{% block description %}
+<meta name="description" content="Cinema online.">
+{% endblock %}
 {% block main_section %}
     <section class="home">
-        <a href={% url 'page' id=2 %}>2</a><a href={% url 'page' id=3 %}>3</a>
         {#     empty or error       #}
         {% if not data %}
             <div class="err">
-                <h1>что-то пошло не так :(</h1>
-                <h2>приходите позже</h2>
+                <h1>Список фильмов пуст</h1>
             </div>
         {% endif %}
         {#     empty or error       #}
@@ -55,10 +55,14 @@
                     </a>
 
 
-                    {% if item.material_data.year != 0 and  item.material_data.year != 'None' %}
+                    {% if item.material_data.year != 0 and  item.material_data.year != 'None' and item.material_data.year != None %}
                         <div class="ratelabel">
                             {{ item.material_data.year }}
+                        </div>{% for genres in item.material_data.genres %}
+                        <div class="ratelabel genres">
+                            {{ genres }}
                         </div>
+                    {% endfor %}
                     {% endif %}
                 </div>
                 {# ==========  INFO BLOCK   END ===============================   #}
@@ -83,13 +87,31 @@
                 <h4 class="card-title">{{ item.title_ru }}</h4>
                 {# ==========  POSER   END ====================================#}
             </div>
-            <br><br>
-            {#    <iframe#}
-            {#            src={{ item.iframe_url }}#}
-            {#                    width="100%"#}
-            {#            height="280"#}
-            {#            frameBorder="0"#}
-            {#            allowFullScreen=""></iframe>#}
+
+
         {% endfor %}
+
     </section>
+    {#   =======================     PAGINATION  ========================================     #}
+    <div class="pagination">
+        {% if current_page >= 2 %}
+            <a href={% url 'page' id=1 %} class="pagination-item pagination-item__begin">начало</a>
+        {% endif %}
+        {% for foo in reverse_loop %}
+            {% if foo >= revers_step and foo != 0 %}
+                <a href={% url 'page' id=foo %} class="pagination-item">{{ foo }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if current_page %}
+            <a href={% url 'page' id=1 %} class="pagination-item pagination-item__disabled">{{ current_page }}</a>
+        {% endif %}
+
+        {% for foo in loop_pagination %}
+            {% if foo != current_page and data %}
+                <a href={% url 'page' id=foo %} class="pagination-item">{{ foo }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {# =============================  PAGINATION END  ==================================   #}
 {% endblock %}

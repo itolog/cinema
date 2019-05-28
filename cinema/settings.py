@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+import django_heroku
+import dj_database_url
+
+django_heroku.settings(locals())
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +29,11 @@ SECRET_KEY = 'a%*v+973xlsq7_$czlbje7rl!d0qaoofu!+5anaogi^n+jh$v*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'cinemait.herokuapp.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -39,6 +48,7 @@ INSTALLED_APPS = [
     'pwa',
     "compressor",
     'inline_static',
+    'corsheaders',
 ]
 
 STATICFILES_FINDERS = (
@@ -56,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'cinema.urls'
@@ -88,7 +100,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+db_up = dj_database_url.config()
+DATABASES['default'].update(db_up)
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -151,9 +164,31 @@ PWA_APP_LANG = 'ru'
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'templates', 'serviceworker.js')
 
 # STATIC AND MORE
-STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
 COMPRESS_ENABLED = True
+
+# CORS
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:8000",
+#     "http://moonwalk.cc"
+# ]
+
+# CORS_ALLOW_METHODS = (
+#     'GET',
+# )
+#
+# CORS_ALLOW_HEADERS = (
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+# )
