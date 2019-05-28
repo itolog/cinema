@@ -1,16 +1,17 @@
-{% load static %}
-{% load compress %}
-{% load inline_static_tags %}
-{% load pwa %}
+<!DOCTYPE html>
 <html ⚡ lang="en">
 <head>
+    {% load static %}
+    {% load compress %}
+    {% load inline_static_tags %}
+    {% load pwa %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     {#    ===================== SEO  ================================================================#}
     {% block description %}{% endblock %}
 
     {#  ===================== PWA  ========================================== #}
-        {% progressive_web_app_meta %}
+    {% progressive_web_app_meta %}
     {#    ============================= AMP ==========================================#}
     <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
     <link rel="preconnect dns-prefetch" href="https://fonts.gstatic.com/" crossorigin>
@@ -28,7 +29,7 @@
             src="https://cdn.ampproject.org/v0/amp-form-0.1.js"
     ></script>
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
-{#    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">#}
+    {#    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">#}
     {#    {% compress css %}#}
     <style amp-custom>
         {% inline_style 'art/styles/main.css' %}
