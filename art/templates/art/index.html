@@ -5,7 +5,7 @@
     Cinema
 {% endblock %}
 {% block description %}
-<meta name="description" content="Cinema online.">
+    <meta name="description" content="Cinema online.">
 {% endblock %}
 {% block main_section %}
     <section class="home">
@@ -71,16 +71,16 @@
                     <amp-img
                             class="movie-poster"
                             alt="{{ item.title_ru }}"
-
-                                    width="200"
+                            layout="responsive"
+                            width="200"
                             height="300"
                             src={{ item.material_data.poster }}></amp-img>
                 {% else %}
                     <amp-img
                             class="movie-poster"
                             alt="{{ item.title_ru }}"
-
-                                    width="200"
+                            layout="responsive"
+                            width="200"
                             height="300"
                             src={% static 'art/img/Poster_Not_Available2.jpg' %}></amp-img>
                 {% endif %}

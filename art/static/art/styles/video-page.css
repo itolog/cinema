@@ -11,7 +11,8 @@
     flex-flow: wrap;
     justify-content: center;
     padding: 20px;
-    width: 100%;
+    margin-bottom: 100px;
+    width: 90%;
 }
 
 .video-page-title {
@@ -20,14 +21,44 @@
     justify-content: space-between;
     color: #000;
 }
+
 .video-title {
     border-bottom: 1px solid grey;
     padding-bottom: 2%;
     margin-bottom: 2%;
 }
+
 .video-page-raite {
+    display: flex;
+    align-items: flex-end;
+    flex-flow: column;
+    justify-content: space-between;
     font-size: 22px;
+    margin: 15px 0;
+    min-width: 100px;
 }
+
+.video-page-raite  div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-wrapp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed gray;
+}
+
+.img-info {
+    display: flex;
+    align-items: center;
+    width: 80px;
+    height: 60px;
+}
+
 .content-poster {
     flex: 1;
     max-width: 300px;
@@ -37,9 +68,11 @@
     border-radius: 10px;
     z-index: 3;
 }
+
 .video-poster {
-     border-radius: 10px;
+    border-radius: 10px;
 }
+
 .content-text {
     display: flex;
     flex-flow: column wrap;
@@ -50,12 +83,52 @@
 }
 
 
+.media-content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.video-player {
+    display: flex;
+    justify-content: center;
+    -webkit-box-shadow: 0px 0px 18px 12px rgba(68, 186, 194, 1);
+    -moz-box-shadow: 0px 0px 18px 12px rgba(68, 186, 194, 1);
+    box-shadow: 0px 0px 18px 12px rgba(68, 186, 194, 1);
+}
+
+
+.info-list {
+    display: flex;
+    flex-flow: wrap;
+    padding: 10px;
+    justify-content: space-around;
+}
+
+.info-list--item {
+    margin-right: 10px;
+    font-weight: 600;
+    -webkit-box-shadow: 10px 2px 5px -6px rgba(235, 211, 235, 1);
+    -moz-box-shadow: 10px 2px 5px -6px rgba(235, 211, 235, 1);
+    box-shadow: 10px 2px 5px -6px rgba(235, 211, 235, 1);
+}
+.info-list--item__decsription {
+    padding: 5px;
+}
 /*    ============== MEDIA ==================================  */
 @media only screen and (max-width: 600px) {
-  .video-info {
-      flex-flow: column;
-  }
+    .video-info {
+        flex-flow: column;
+    }
+
+    .video-page-raite {
+        width: 100%;
+        flex-flow: wrap row;
+
+    }
+
     .content-text {
-         padding: 10px 5px 12px 10px;
+        padding: 10px 5px 12px 10px;
     }
 }

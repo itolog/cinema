@@ -23,12 +23,12 @@ def data_context(url):
     start_loop = current_page
     stop_loop = current_page + 3
     revers_step = current_page - 2
-    # pprint.pprint(res_json['updates'])
+    pprint.pprint(res_json['updates'])
     context = {
         "data": res_json['updates'],
         "current_page": current_page,
         "loop_pagination": range(start_loop, stop_loop),
-        "reverse_loop": reversed(range(start_loop)),
+        "reverse_loop": range(start_loop),
         "revers_step": revers_step,
         "title": "Sinema"
     }
@@ -67,6 +67,7 @@ def video(request):
         url = f"http://moonwalk.cc/api/videos.json?kinopoisk_id={id}&api_token={token}"
         res = requests.get(url)
         res_json = res.json()
+
         title = res_json[0].get('title_ru')
         title_en = res_json[0].get('title_en')
         material_data = res_json[0].get('material_data')

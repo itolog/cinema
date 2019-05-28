@@ -22,15 +22,17 @@
     <section class="video-page">
         {# ===========   INFO ============================   #}
         <div class="video-info">
+            {#       POSTER     #}
             <div class="content-poster">
                 <amp-img
                         class="video-poster"
                         alt="{{ item.title_ru }}"
 
-                                width="200"
+                        width="200"
                         height="300"
                         src={{ poster }}></amp-img>
             </div>
+            {#     CONTENT   #}
             <div class="content-text">
                 <div class="video-page-title">
                     <div>
@@ -38,30 +40,114 @@
                         <h3>{{ title_en }}</h3>
                     </div>
                     <div class="video-page-raite">
-                         <amp-img
-                                class="video-poster"
-                                alt="{{ raite }}"
+                        {% if raite != None %}
+                            <div>
+                                <amp-img
+                                        class="video-poster"
+                                        alt="{{ raite }}"
 
                                         width="20"
-                                height="20"
-                                src={% static 'art/img/star.svg' %}></amp-img>
-                        {{ raite }}
+                                        height="20"
+                                        src={% static 'art/img/star.svg' %}></amp-img>
+                                <span> {{ raite }} / 10</span>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <amp-img
+                                    class="video-poster"
+                                    alt="{{ raite }}"
+
+                                    width="20"
+                                    height="20"
+                                    src={% static 'art/img/calendar.svg' %}></amp-img>
+                            {{ material_data.year }}</div>
                     </div>
                 </div>
                 {% if material_data %}
-                    {% for mat_item in material_data %}
+                    <div class="media-desc">
+                        {#       == COUNTRIES ==             #}
+                        <div class="info-wrapp">
 
-                    {% endfor %}
+                            <amp-img
+                                    alt="countrie"
+                                    width="30"
+                                    height="30"
+                                    src={% static 'art/img/worldwide.svg' %}></amp-img>
 
+                            <ul class="info-list">
+                                {% for countrie in material_data.countries %}
+                                    <li class="info-list--item">{{ countrie }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {#       == GENRES ==             #}
+                        <div class="info-wrapp">
+                            <div class="img-info">
+                                <amp-img
+                                        alt="genre"
+                                        width="30"
+                                        height="30"
+                                        src={% static 'art/img/tags.svg' %}></amp-img>
+                            </div>
+                            <ul class="info-list">
+                                {% for genre in material_data.genres %}
+                                    <li class="info-list--item">{{ genre }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {#       == DIRECTORS ==             #}
+                        <div class="info-wrapp">
+                            <div class="img-info">
+                                <amp-img
+                                        alt="genre"
+                                        width="30"
+                                        height="30"
+                                        src={% static 'art/img/producer.svg' %}></amp-img>
+                            </div>
+                            <ul class="info-list">
+                                {% for directors in material_data.directors %}
+                                    <li class="info-list--item">{{ directors }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {#       == ACTORS ==             #}
+                        <div class="info-wrapp">
+                            <div class="img-info">
+                                <amp-img
+                                        alt="genre"
+                                        width="60"
+                                        height="40"
+                                        src={% static 'art/img/theatre.svg' %}></amp-img>
+                            </div>
+                            <ul class="info-list">
+                                {% for actors in material_data.actors %}
+                                    <li class="info-list--item">{{ actors }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {#       == DESCRIPTION ==             #}
+                        {% if material_data.description %}
+                            <div class="info-wrapp">
+                                <div class="img-info">
+                                    <amp-img
+                                            alt="genre"
+                                            width="60"
+                                            height="40"
+                                            src={% static 'art/img/catalogue.svg' %}></amp-img>
+                                </div>
+                                <ul class="info-list">
+                                    <li class="info-list--item info-list--item__decsription">{{ material_data.description }}</li>
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                    </div>
                 {% endif %}
             </div>
         </div>
         <div class="media-content">
-            <div
-                    id="yohoho"
-                    class="video-player"
-                    data-kinopoisk={{ query }}
-            >
+            <div class="video-player">
+                <div id="yohoho" style="width: 100%;" data-kinopoisk={{ query }}></div>
             </div>
         </div>
 

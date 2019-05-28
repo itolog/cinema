@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'art.apps.ArtConfig',
-    'pwa',
     "compressor",
     'inline_static',
     'corsheaders',
@@ -139,31 +138,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 
-# PWA
-PWA_APP_NAME = 'cinema'
-PWA_APP_DESCRIPTION = "online cinema"
-PWA_APP_THEME_COLOR = '#0A0302'
-PWA_APP_BACKGROUND_COLOR = '#ffffff'
-PWA_APP_DISPLAY = 'standalone'
-PWA_APP_SCOPE = '/',
-PWA_APP_ORIENTATION = 'any'
-PWA_APP_START_URL = '/'
-# PWA_APP_ICONS = [
-#     {
-#         'src': '/static/images/my_app_icon.png',
-#         'sizes': '160x160'
-#     }
-# ]
-# PWA_APP_SPLASH_SCREEN = [
-#     {
-#         'src': '/static/images/icons/splash-640x1136.png',
-#         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
-#     }
-# ]
-PWA_APP_DIR = 'ltr'
-PWA_APP_LANG = 'ru'
-
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'templates', 'serviceworker.js')
 
 # STATIC AND MORE
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
