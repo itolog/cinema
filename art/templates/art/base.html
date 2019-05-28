@@ -1,7 +1,7 @@
 {% load static %}
 {% load compress %}
 {% load inline_static_tags %}
-{#{% load pwa %}#}
+{% load pwa %}
 <html ⚡ lang="en">
 <head>
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
     {% block description %}{% endblock %}
 
     {#  ===================== PWA  ========================================== #}
-    {#    {% progressive_web_app_meta %}#}
+        {% progressive_web_app_meta %}
     {#    ============================= AMP ==========================================#}
     <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
     <link rel="preconnect dns-prefetch" href="https://fonts.gstatic.com/" crossorigin>
