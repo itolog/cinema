@@ -14,11 +14,8 @@
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <!--  =================== Import other AMP Extensions here ==========================------------------>
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-    <script
-            async
-            custom-element="amp-sidebar"
-            src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"
-    ></script>
+    <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+
     <script
             async
             custom-element="amp-form"
@@ -101,41 +98,19 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-{#    ======================  NAVIGATION BAR ===========================#}
-<amp-sidebar id="sidebar" layout="nodisplay" side="left">
-    <nav class="navigation">
-        <div class="navigation-header">
-            <h3 class="navigation-title">Навигация </h3>
-            <span role="span" tabIndex="0" on="tap:sidebar.toggle">
-          <amp-img
-                  alt="menu"
-                  src={% static 'art/menu.svg' %}
-                          width="20"
-                  height="20"></amp-img>
-        </span>
-        </div>
+{#<amp-state id="myAnimals">#}
+{#    <script type="application/json">#}
+{#    {#}
+{#      "hide": {#}
+{#        "style": "hide"#}
+{#      },#}
+{#      "show": {#}
+{#        "style": "show"#}
+{#      }#}
+{#    }#}
+{#  </script>#}
+{#</amp-state>#}
 
-        <ul class="navbar">
-            <li class="navbar-items">
-                <a href="/" class="navbar-link">
-                    <amp-img
-                            class="logo-link"
-                            alt="logo cinema"
-                            src={% static 'art/movie-player.svg' %}
-                                    width="30"
-                            height="30"></amp-img>
-                    <span>На главную</span>
-                </a>
-            </li>
-            <li class="navbar-items">2</li>
-            <li class="navbar-items">3</li>
-            <li class="navbar-items">4</li>
-            <li class="navbar-items">5</li>
-        </ul>
-
-    </nav>
-</amp-sidebar>
-{#    ======================  NAVIGATION BAR END ===========================#}
 {#    ======================= HEADR  ===================================#}
 <header class="header">
     <div class="menu">
@@ -143,7 +118,7 @@
                 class="menu-content"
                 role="div"
                 tabIndex="1"
-                on="tap:sidebar.toggle">
+                on="tap:AMP.setState({mainopen: !mainopen})">
             <amp-img
                     alt="menu"
                     src={% static 'art/menu.svg' %}
@@ -193,6 +168,63 @@
 
 {# =========================== MAIN CONTENT =================================#}
 <main class="main">
+    {#    ======================  NAVIGATION BAR ===========================#}
+    <nav class="navigation hide" [class]="mainopen ? 'navigation show': 'navigation hide'">
+        <div class="navigation-left">
+            <div class="navigation-header">
+                <h3 class="navigation-title">Навигация </h3>
+                <span role="span" tabIndex="0" on="tap:sidebar.toggle">
+          <amp-img
+                  alt="menu"
+                  on="tap:AMP.setState({mainopen: !mainopen})"
+                  src={% static 'art/menu.svg' %}
+                          width="20"
+                  height="20"></amp-img>
+        </span>
+            </div>
+
+            <ul class="navbar">
+                <li class="navbar-items">
+                    <a href="/" class="navbar-link">
+                        <amp-img
+                                class="logo-link"
+                                alt="logo cinema"
+                                src={% static 'art/movie-player.svg' %}
+                                        width="30"
+                                height="30"></amp-img>
+                        <span>На главную</span>
+                    </a>
+                </li>
+                <li class="navbar-items">2</li>
+                <li class="navbar-items">3</li>
+                <li class="navbar-items">4</li>
+                <li class="navbar-items">5</li>
+                <div class="search search__navbar">
+                    <div class="search-conten">
+                        <form method="get" action="/search" target="_top">
+                            <input
+                                    tabIndex="3"
+                                    id="search"
+                                    name="q"
+                                    type="text"
+                                    placeholder="поиск"
+                                    class="searchform searchform__navbar"
+                            />
+
+                            <div class="btn-search">
+                                <label>
+                                    <input type="submit" class="input-q"/>
+
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </ul>
+        </div>
+        <div class="navigation-right" on="tap:AMP.setState({mainopen: !mainopen})"></div>
+    </nav>
+    {#    ======================  NAVIGATION BAR END ===========================#}
     {% block main_section %}
     {% endblock main_section %}
 </main>

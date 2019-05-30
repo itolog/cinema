@@ -50,7 +50,7 @@ def page(request, id):
 
 def search(request):
     if request.method == "GET":
-        url = f"https://api.themoviedb.org/3/search/movie?api_key={token_imdb}&language=ru&query={request.GET['q']}"
+        url = f"https://api.themoviedb.org/3/search/multi?api_key={token_imdb}&language=ru&query={request.GET['q']}"
         res = requests.get(url)
         res_json = res.json()
         pprint.pprint(res_json)
@@ -74,7 +74,7 @@ def video(request):
         description = material_data['description']
         poster = material_data['poster']
         raite = material_data['imdb_rating']
-        pprint.pprint(material_data)
+        # pprint.pprint(material_data)
 
         context = {
             "title": title,
