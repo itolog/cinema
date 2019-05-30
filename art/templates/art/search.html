@@ -1,12 +1,73 @@
 {% extends 'art/base.html' %}
 {% load static %}
+{% load inline_static_tags %}
 
 {% block title %}
-{{ title }}
+    {{ title }}
 {% endblock %}v
 
+{% block styles %}
+    {% inline_style 'art/styles/search-page.css' %}
+{% endblock %}
+
 {% block main_section %}
-    <h1>{{ title }}</h1>
-<div class="media-content">
+    <section class="search-page">
+        <h1 class="search-page--title">{{ title }}</h1>
+        <div class="search-page--content">
+            <ul class="search-content">
+                {% for result in results %}
+                    {% if result.title and result.poster_path and result.overview and result.release_date %}
+                        <li class="search-content--items">
+                            <div class="search-content--poster">
+                                <amp-img
+                                        class="video-poster"
+                                        alt="{{ item.title }}"
+
+                                        width="200"
+                                        height="300"
+                                        src="https://image.tmdb.org/t/p/w185{{ result.poster_path }}"
+                                ></amp-img>
+                            </div>
+                            <div class="search-content--info">
+                                <h3>
+                                    {{ result.title }}
+                                </h3>
+                                <h4> {{ result.release_date }}</h4>
+                                <p>{{ result.overview }}</p>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+            </ul>
+
+        </div>
+     {#   =======================     PAGINATION  ========================================     #}
+    <div class="pagination">
+        {% for page in reverse_loop %}
+            {% if page >= revers_step and page != 0 %}
+                <a href={% url 'search' page=page   %}?q={{ title }}  class="pagination-item">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if data.page %}
+            <a href={% url 'search' page=1  %}?q={{ title }} class="pagination-item pagination-item__disabled">{{ data.page }}</a>
+        {% endif %}
+
+        {% for page in pages %}
+            {% if page != data.page and data and page <= data.total_pages  %}
+
+                <a href={% url 'search' page=page   %}?q={{ title }}  class="pagination-item">{{ page }}</a>
+
+            {% endif %}
+        {% endfor %}
+    {% if data.total_pages > 1 %}
+        <a href={% url 'search' page=data.total_pages %}?q={{ title }}
+           class="pagination-item">{{ data.total_pages }}</a>
+    {% endif %}
+
+    </div>
+    {# =============================  PAGINATION END  ==================================   #}
+    </section>
 
 {% endblock %}

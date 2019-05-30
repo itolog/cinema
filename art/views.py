@@ -23,7 +23,7 @@ def data_context(url):
     start_loop = current_page
     stop_loop = current_page + 3
     revers_step = current_page - 2
-    pprint.pprint(res_json['updates'])
+    # pprint.pprint(res_json['updates'])
     context = {
         "data": res_json['updates'],
         "current_page": current_page,
@@ -48,15 +48,29 @@ def page(request, id):
     return render(request, "art/index.html", context)
 
 
-def search(request):
+def search(request, page):
     if request.method == "GET":
-        url = f"https://api.themoviedb.org/3/search/multi?api_key={token_imdb}&language=ru&query={request.GET['q']}"
+        url = f"https://api.themoviedb.org/3/search/multi?api_key={token_imdb}&language=ru&query={request.GET['q']}&page={page}"
         res = requests.get(url)
         res_json = res.json()
+        results = res_json['results']
+        total_pages = res_json['total_pages']
+        revers_step = res_json["page"] - 2
+
+        # results = res_json['results']
         pprint.pprint(res_json)
+
+        # pprint.pprint(res_json['results'])
+
         context = {
             "title": request.GET['q'],
-            "query": request.GET['q']
+            "query": request.GET['q'],
+            "results": results,
+            "data":  res_json,
+            "reverse_loop": range(res_json["page"]),
+            "revers_step": revers_step,
+            "pages": range(res_json["page"], res_json["page"]+3),
+            'total_pages': total_pages
         }
     return render(request, "art/search.html", context)
 
