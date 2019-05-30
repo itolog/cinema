@@ -13,6 +13,11 @@
 {% block main_section %}
     <section class="search-page">
         <h1 class="search-page--title">{{ title }}</h1>
+      {#  =====  EMPTY RESULTS      #}
+            {% if not results %}
+                <h1>результатов нету</h1>
+            {% endif %}
+        {#  =====  EMPTY RESULTS      #}
         <div class="search-page--content">
             <ul class="search-content">
                 {% for result in results %}
@@ -42,32 +47,33 @@
             </ul>
 
         </div>
-     {#   =======================     PAGINATION  ========================================     #}
-    <div class="pagination">
-        {% for page in reverse_loop %}
-            {% if page >= revers_step and page != 0 %}
-                <a href={% url 'search' page=page   %}?q={{ title }}  class="pagination-item">{{ page }}</a>
+        {#   =======================     PAGINATION  ========================================     #}
+        <div class="pagination">
+            {% for page in reverse_loop %}
+                {% if page >= revers_step and page != 0  %}
+                    <a href={% url 'search' page=page %}?q={{ title }} class="pagination-item">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if data.page %}
+                <a href={% url 'search' page=1 %}?q={{ title }}
+                   class="pagination-item pagination-item__disabled">{{ data.page }}</a>
             {% endif %}
-        {% endfor %}
 
-        {% if data.page %}
-            <a href={% url 'search' page=1  %}?q={{ title }} class="pagination-item pagination-item__disabled">{{ data.page }}</a>
-        {% endif %}
+            {% for page in pages %}
+                {% if page != data.page and data and page <= data.total_pages %}
 
-        {% for page in pages %}
-            {% if page != data.page and data and page <= data.total_pages  %}
+                    <a href={% url 'search' page=page %}?q={{ title }} class="pagination-item">{{ page }}</a>
 
-                <a href={% url 'search' page=page   %}?q={{ title }}  class="pagination-item">{{ page }}</a>
-
+                {% endif %}
+            {% endfor %}
+            {% if data.total_pages < 1 %}
+                <a href={% url 'search' page=data.total_pages %}?q={{ title }}
+                   class="pagination-item">{{ data.total_pages }}</a>
             {% endif %}
-        {% endfor %}
-    {% if data.total_pages > 1 %}
-        <a href={% url 'search' page=data.total_pages %}?q={{ title }}
-           class="pagination-item">{{ data.total_pages }}</a>
-    {% endif %}
 
-    </div>
-    {# =============================  PAGINATION END  ==================================   #}
+        </div>
+        {# =============================  PAGINATION END  ==================================   #}
     </section>
 
 {% endblock %}

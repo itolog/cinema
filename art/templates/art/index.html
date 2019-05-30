@@ -66,22 +66,22 @@
                     {% endif %}
                 </div>
                 {# ==========  INFO BLOCK   END ===============================   #}
-                {# ==========  POSER  ====================================#}
+                {# ==========  POStER  ====================================#}
                 {% if item.material_data.poster %}
                     <amp-img
                             class="movie-poster"
                             alt="{{ item.title_ru }}"
                             layout="responsive"
-                            width="200"
-                            height="300"
+                            width="360"
+                            height="520"
                             src={{ item.material_data.poster }}></amp-img>
                 {% else %}
                     <amp-img
                             class="movie-poster"
                             alt="{{ item.title_ru }}"
                             layout="responsive"
-                            width="200"
-                            height="300"
+                            width="600"
+                            height="800"
                             src={% static 'art/img/Poster_Not_Available2.jpg' %}></amp-img>
                 {% endif %}
                 <h4 class="card-title">{{ item.title_ru }}</h4>
