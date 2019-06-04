@@ -184,21 +184,6 @@
             </div>
 
             <ul class="navbar">
-                <li class="navbar-items">
-                    <a href="/" class="navbar-link">
-                        <amp-img
-                                class="logo-link"
-                                alt="logo cinema"
-                                src={% static 'art/movie-player.svg' %}
-                                        width="30"
-                                height="30"></amp-img>
-                        <span>На главную</span>
-                    </a>
-                </li>
-                <li class="navbar-items">2</li>
-                <li class="navbar-items">3</li>
-                <li class="navbar-items">4</li>
-                <li class="navbar-items">5</li>
                 <div class="search search__navbar">
                     <div class="search-conten">
                         <form method="get" action="/search/1" target="_top">
@@ -220,6 +205,34 @@
                         </form>
                     </div>
                 </div>
+                <li class="navbar-items">
+                    <a href="/" class="navbar-link">
+                        <amp-img
+                                class="logo-link"
+                                alt="logo cinema"
+                                src={% static 'art/movie-player.svg' %}
+                                        width="30"
+                                height="30"></amp-img>
+                        <span>Фильмы</span>
+                    </a>
+                </li>
+                <li class="navbar-items">
+                    <a
+                            href="{% url 'serials' %}"
+                            class="navbar-link">
+                        <amp-img
+                                class="logo-link"
+                                alt="logo cinema"
+                                src={% static 'art/movie-player.svg' %}
+                                        width="30"
+                                height="30"></amp-img>
+                        <span>Сериалы</span>
+                    </a>
+                </li>
+                <li class="navbar-items">3</li>
+                <li class="navbar-items">4</li>
+                <li class="navbar-items">5</li>
+
             </ul>
         </div>
         <div class="navigation-right" on="tap:AMP.setState({mainopen: !mainopen})"></div>

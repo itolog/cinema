@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import json
 import os
-from django.core.paginator import Paginator
 
 import requests
 import pprint
@@ -13,7 +12,6 @@ print(file)
 with open(file) as conf:
     secrets = json.load(conf)
     token = secrets["TOKEN_MOON"]
-    token_imdb = secrets["TOKEN_IMDB"]
 
 
 def data_context(url):
@@ -23,7 +21,9 @@ def data_context(url):
     start_loop = current_page
     stop_loop = current_page + 3
     revers_step = current_page - 2
-    # pprint.pprint(res_json['updates'])
+
+    pprint.pprint(res_json['updates'])
+
     context = {
         "data": res_json['updates'],
         "current_page": current_page,
@@ -42,6 +42,17 @@ def index(request):
     return render(request, "art/index.html", context)
 
 
+def serials(request):
+    url = f"http://moonwalk.cc/api/serials_updates.json?api_token={token}"
+
+    context = data_context(url)
+    return render(request, "art/serials.html", context)
+
+def page_serials(request, id):
+    url = f"http://moonwalk.cc/api/serials_updates.json?api_token={token}&page={id}"
+    context = data_context(url)
+    return render(request, "art/serials.html", context)
+
 def page(request, id):
     url = f"http://moonwalk.cc/api/movies_updates.json?api_token={token}&page={id}"
     context = data_context(url)
@@ -50,27 +61,24 @@ def page(request, id):
 
 def search(request, page):
     if request.method == "GET":
-        url = f"https://api.themoviedb.org/3/search/multi?api_key={token_imdb}&language=ru&query={request.GET['q']}&page={page}"
+        url = f"http://moonwalk.cc/api/videos.json?title={request.GET['q']}&api_token={token}"
         res = requests.get(url)
         res_json = res.json()
-        results = res_json['results']
-        total_pages = res_json['total_pages']
-        revers_step = res_json["page"] - 2
-
         # results = res_json['results']
-        pprint.pprint(res_json)
+        # total_pages = res_json['total_pages']
+        # revers_step = res_json["page"] - 2
 
-        # pprint.pprint(res_json['results'])
+        # pprint.pprint(res_json)
+
 
         context = {
             "title": request.GET['q'],
             "query": request.GET['q'],
-            "results": results,
             "data":  res_json,
-            "reverse_loop": range(res_json["page"]),
-            "revers_step": revers_step,
-            "pages": range(res_json["page"], res_json["page"]+3),
-            'total_pages': total_pages
+            # "reverse_loop": range(res_json["page"]),
+            # "revers_step": revers_step,
+            # "pages": range(res_json["page"], res_json["page"]+3),
+            # 'total_pages': total_pages
         }
     return render(request, "art/search.html", context)
 
@@ -84,11 +92,17 @@ def video(request):
 
         title = res_json[0].get('title_ru')
         title_en = res_json[0].get('title_en')
-        material_data = res_json[0].get('material_data')
+
+        if res_json[0].get('material_data'):
+            material_data = res_json[0].get('material_data')
+        else:
+            material_data = res_json[1].get('material_data')
+
         description = material_data['description']
         poster = material_data['poster']
         raite = material_data['imdb_rating']
-        # pprint.pprint(material_data)
+
+        # pprint.pprint(res_json)
 
         context = {
             "title": title,

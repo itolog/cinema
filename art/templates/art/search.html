@@ -13,34 +13,40 @@
 {% block main_section %}
     <section class="search-page">
         <h1 class="search-page--title">{{ title }}</h1>
-      {#  =====  EMPTY RESULTS      #}
-            {% if not results %}
-                <h1>результатов нету</h1>
-            {% endif %}
+        {#  =====  EMPTY RESULTS      #}
+        {% if not data %}
+            <h1>результатов нету</h1>
+        {% endif %}
         {#  =====  EMPTY RESULTS      #}
         <div class="search-page--content">
             <ul class="search-content">
-                {% for result in results %}
-                    {% if result.title and result.poster_path and result.overview and result.release_date %}
+                {% for result in data %}
+                    {% if result.title_ru and result.material_data.poster and result.material_data.description and result.year %}
+
                         <li class="search-content--items">
                             <div class="search-content--poster">
-                                <amp-img
-                                        class="video-poster"
-                                        alt="{{ item.title }}"
+                                <a href="{% url 'video' %}?title={{ result.kinopoisk_id }}">
+                                    <amp-img
+                                            class="video-poster"
+                                            alt="{{ result.title_ru }}"
 
-                                        width="200"
-                                        height="300"
-                                        src="https://image.tmdb.org/t/p/w185{{ result.poster_path }}"
-                                ></amp-img>
+                                            width="200"
+                                            height="300"
+                                            src="{{ result.material_data.poster }}"
+                                    ></amp-img>
+                                </a>
                             </div>
                             <div class="search-content--info">
-                                <h3>
-                                    {{ result.title }}
-                                </h3>
-                                <h4> {{ result.release_date }}</h4>
-                                <p>{{ result.overview }}</p>
+                                <a class="search-page--link" href="{% url 'video' %}?title={{ result.kinopoisk_id }}">
+                                    <h3>
+                                        {{ result.title_ru }}
+                                    </h3>
+                                </a>
+                                <h4> {{ result.year }}</h4>
+                                <p class="search-page--description">{{ result.material_data.description }}</p>
                             </div>
                         </li>
+
                     {% endif %}
                 {% endfor %}
 
@@ -48,31 +54,31 @@
 
         </div>
         {#   =======================     PAGINATION  ========================================     #}
-        <div class="pagination">
-            {% for page in reverse_loop %}
-                {% if page >= revers_step and page != 0  %}
-                    <a href={% url 'search' page=page %}?q={{ title }} class="pagination-item">{{ page }}</a>
-                {% endif %}
-            {% endfor %}
-
-            {% if data.page %}
-                <a href={% url 'search' page=1 %}?q={{ title }}
-                   class="pagination-item pagination-item__disabled">{{ data.page }}</a>
-            {% endif %}
-
-            {% for page in pages %}
-                {% if page != data.page and data and page <= data.total_pages %}
-
-                    <a href={% url 'search' page=page %}?q={{ title }} class="pagination-item">{{ page }}</a>
-
-                {% endif %}
-            {% endfor %}
-            {% if data.total_pages < 1 %}
-                <a href={% url 'search' page=data.total_pages %}?q={{ title }}
-                   class="pagination-item">{{ data.total_pages }}</a>
-            {% endif %}
-
-        </div>
+        {#        <div class="pagination">#}
+        {#            {% for page in reverse_loop %}#}
+        {#                {% if page >= revers_step and page != 0 %}#}
+        {#                    <a href={% url 'search' page=page %}?q={{ title }} class="pagination-item">{{ page }}</a>#}
+        {#                {% endif %}#}
+        {#            {% endfor %}#}
+        {##}
+        {#            {% if data.page %}#}
+        {#                <a href={% url 'search' page=1 %}?q={{ title }}#}
+        {#                   class="pagination-item pagination-item__disabled">{{ data.page }}</a>#}
+        {#            {% endif %}#}
+        {##}
+        {#            {% for page in pages %}#}
+        {#                {% if page != data.page and data and page <= data.total_pages %}#}
+        {##}
+        {#                    <a href={% url 'search' page=page %}?q={{ title }} class="pagination-item">{{ page }}</a>#}
+        {##}
+        {#                {% endif %}#}
+        {#            {% endfor %}#}
+        {#            {% if data.total_pages < 1 %}#}
+        {#                <a href={% url 'search' page=data.total_pages %}?q={{ title }}#}
+        {#                   class="pagination-item">{{ data.total_pages }}</a>#}
+        {#            {% endif %}#}
+        {##}
+        {#        </div>#}
         {# =============================  PAGINATION END  ==================================   #}
     </section>
 

@@ -23,6 +23,7 @@
         {# ===========   INFO ============================   #}
         <div class="video-info">
             {#       POSTER     #}
+        {% if material_data.poster %}
             <div class="content-poster">
                 <amp-img
                         class="video-poster"
@@ -32,6 +33,8 @@
                         height="300"
                         src={{ poster }}></amp-img>
             </div>
+        {% endif %}
+
             {#     CONTENT   #}
             <div class="content-text">
                 <div class="video-page-title">

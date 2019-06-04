@@ -16,34 +16,28 @@
             </div>
         {% endif %}
         {#     empty or error       #}
+
         {% for item in data %}
             {#  ====   Фильтрация битых ссылок  =============  #}
-            {% if item.kinopoisk_id %}
+            {% if item.serial.kinopoisk_id and item  in data %}
                 <div class="movie-card">
                     {# ==========  INFO BLOCK   ===============================   #}
                     <div class="info">
-                        {% if item.material_data.imdb_rating != 0 and item.material_data.imdb_rating != None %}
+                        {% if item.serial.material_data.imdb_rating != 0 and item.serial.material_data.imdb_rating != None %}
                             <h5 class="rating">
                                 IMDb :
-                                <span class="rating--imdb">  {{ item.material_data.imdb_rating }}</span>
+                                <span class="rating--imdb">  {{ item.serial.material_data.imdb_rating }}</span>
                             </h5>
                         {% endif %}
-                        {% if item.material_data.kinopoisk_rating != 0 and item.material_data.kinopoisk_rating != None %}
+                        {% if item.serial.material_data.kinopoisk_rating != 0 and item.serial.material_data.kinopoisk_rating != None %}
                             <h5 class="rating">
                                 КиноПоиск :
-                                <span class="rating--kinopoisk">{{ item.material_data.kinopoisk_rating }}</span>
+                                <span class="rating--kinopoisk">{{ item.serial.material_data.kinopoisk_rating }}</span>
                             </h5>
                         {% endif %}
-                        {#  ===== IS CAMRIP OR NOT ==============              #}
-                        {% if item.camrip %}
-                            <h5 class="rating">
-                                CAMRip
-                            </h5>
-                        {% endif %}
-                        {#  ===== IS CAMRIP OR NOT   END==============              #}
                         {#  ===== PLAY BUTTON ===========              #}
                         <a
-                                href="{% url 'video' %}?title={{ item.kinopoisk_id }}"
+                                href="{% url 'video' %}?title={{ item.serial.kinopoisk_id }}"
                                 class="play-link"
                                 rel="noopener">
                             <amp-img
@@ -56,10 +50,10 @@
                         </a>
 
 
-                        {% if item.material_data.year != 0 and  item.material_data.year != 'None' and item.material_data.year != None %}
+                        {% if item.serial.material_data.year != 0 and  item.serial.material_data.year != 'None' and item.serial.material_data.year != None %}
                             <div class="ratelabel">
-                                {{ item.material_data.year }}
-                            </div>{% for genres in item.material_data.genres %}
+                                {{ item.serial.material_data.year }}
+                            </div>{% for genres in item.serial.material_data.genres %}
                             <div class="ratelabel genres">
                                 {{ genres }}
                             </div>
@@ -68,49 +62,47 @@
                     </div>
                     {# ==========  INFO BLOCK   END ===============================   #}
                     {# ==========  POStER  ====================================#}
-                    {% if item.material_data.poster %}
+                    {% if item.serial.material_data.poster %}
                         <amp-img
                                 class="movie-poster"
-                                alt="{{ item.title_ru }}"
+                                alt="{{ item.serial.title_ru }}"
                                 layout="responsive"
                                 width="360"
                                 height="520"
-                                src={{ item.material_data.poster }}></amp-img>
+                                src={{ item.serial.material_data.poster }}></amp-img>
                     {% else %}
                         <amp-img
                                 class="movie-poster"
-                                alt="{{ item.title_ru }}"
+                                alt="{{ item.serial.title_ru }}"
                                 layout="responsive"
                                 width="600"
                                 height="800"
                                 src={% static 'art/img/Poster_Not_Available2.jpg' %}></amp-img>
                     {% endif %}
-                    <h4 class="card-title">{{ item.title_ru }}</h4>
+                    <h4 class="card-title">{{ item.serial.title_ru }}</h4>
                     {# ==========  POSER   END ====================================#}
                 </div>
             {% endif %}
-
         {% endfor %}
-
     </section>
     {#   =======================     PAGINATION  ========================================     #}
     <div class="pagination">
         {% if current_page >= 2 %}
-            <a href={% url 'page' id=1 %} class="pagination-item pagination-item__begin">начало</a>
+            <a href={% url 'page-serials' id=1 %} class="pagination-item pagination-item__begin">начало</a>
         {% endif %}
         {% for foo in reverse_loop %}
             {% if foo >= revers_step and foo != 0 %}
-                <a href={% url 'page' id=foo %} class="pagination-item">{{ foo }}</a>
+                <a href={% url 'page-serials' id=foo %} class="pagination-item">{{ foo }}</a>
             {% endif %}
         {% endfor %}
 
         {% if current_page %}
-            <a href={% url 'page' id=1 %} class="pagination-item pagination-item__disabled">{{ current_page }}</a>
+            <a href={% url 'page-serials' id=1 %} class="pagination-item pagination-item__disabled">{{ current_page }}</a>
         {% endif %}
 
         {% for foo in loop_pagination %}
             {% if foo != current_page and data %}
-                <a href={% url 'page' id=foo %} class="pagination-item">{{ foo }}</a>
+                <a href={% url 'page-serials' id=foo %} class="pagination-item">{{ foo }}</a>
             {% endif %}
         {% endfor %}
     </div>
